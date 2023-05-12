@@ -31,10 +31,14 @@ export function App() {
 
   const loadTransactionsByEmployee = useCallback(
     async (employeeId: string) => {
-      paginatedTransactionsUtils.invalidateData()
-      await transactionsByEmployeeUtils.fetchById(employeeId)
+      if(employeeId) {
+        paginatedTransactionsUtils.invalidateData()
+        await transactionsByEmployeeUtils.fetchById(employeeId)
+      } else {
+        loadAllTransactions()
+      }
     },
-    [paginatedTransactionsUtils, transactionsByEmployeeUtils]
+    [paginatedTransactionsUtils, transactionsByEmployeeUtils, loadAllTransactions]
   )
 
   useEffect(() => {
